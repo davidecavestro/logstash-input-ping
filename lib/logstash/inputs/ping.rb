@@ -63,11 +63,13 @@ class LogStash::Inputs::Ping < LogStash::Inputs::Base
 
   # The host to ping.
   #
-  # The default, `8.8.8.8`, is the .
-  config :host, :validate => :string, :default => "8.8.8.8"
+  # The default is `127.0.0.1`.
+  config :host, :validate => :string, :default => "127.0.0.1"
 
   # The ping mode to use.
-  config :mode, :validate => :string, :default => "ICMP"
+  #
+  # The default is `external`.
+  config :mode, :validate => :string, :default => "external"
 
   # Set how frequently messages should be sent.
   #
@@ -88,10 +90,12 @@ class LogStash::Inputs::Ping < LogStash::Inputs::Base
     if @schedule
       require "rufus/scheduler"
     end
+
+#    @logger = self.logger
   end # def register
 
   def run(queue)
-    @action = Rufus::Scheduler.new(:max_work_threads => 1)
+    create_probe
     if @schedule
       @scheduler = Rufus::Scheduler.new(:max_work_threads => 1)
       @scheduler.cron @schedule do
