@@ -87,6 +87,7 @@ class LogStash::Inputs::Ping < LogStash::Inputs::Base
   public
 
   def register
+    @thishost = Socket.gethostname
     if @schedule
       require "rufus/scheduler"
     end
@@ -140,7 +141,8 @@ class LogStash::Inputs::Ping < LogStash::Inputs::Base
   def do_ping (queue)
     success = @probe.ping(@host)
     duration = @probe.duration
-    event = LogStash::Event.new("success" => success, "duration" => duration, "host" => @host)
+    message = {"success" => success, "duration" => duration, "host" => @host}
+    event = LogStash::Event.new("message" => message, "host" => @thishost)
     decorate(event)
     queue << event
   end
