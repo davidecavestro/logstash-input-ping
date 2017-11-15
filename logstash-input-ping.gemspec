@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name          = 'logstash-input-ping'
   s.version       = '0.1.0'
-  s.licenses      = ['Apache License (2.0)']
+  s.licenses      = ['Apache-2.0']
   s.summary       = 'Provides ping data as input for Logstash'
   s.description   = 'This gem is a Logstash plugin required to be installed on top of the Logstash core pipeline using $LS_HOME/bin/logstash-plugin install gemname. This gem is not a stand-alone program'
   s.homepage      = 'https://github.com/davidecavestro/logstash-input-ping'
@@ -21,7 +21,6 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency "logstash-core-plugin-api", "~> 2.0"
   s.add_runtime_dependency 'logstash-codec-json'
   s.add_runtime_dependency 'logstash-codec-plain'
-  s.add_runtime_dependency 'stud', '>= 0.0.22'
   s.add_runtime_dependency 'tzinfo'
   s.add_runtime_dependency 'tzinfo-data'
   s.add_runtime_dependency 'rufus-scheduler'
